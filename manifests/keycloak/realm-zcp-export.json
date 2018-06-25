@@ -1758,7 +1758,7 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {
-    "password": "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",
+    "password": "",
     "starttls": "true",
     "auth": "true",
     "port": "465",
