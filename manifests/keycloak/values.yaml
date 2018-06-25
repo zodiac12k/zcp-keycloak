@@ -1,0 +1,88 @@
+keycloak:
+  tolerations:
+    - effect: NoSchedule
+      key: management
+      operator: Equal
+      value: "true"
+
+  affinity: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+          - key: role
+            operator: In
+            values:
+            - management
+
+  extraInitContainers: |
+    - name: theme-provider
+      image: cloudzcp/zcp-keycloak-theme-provider:latest
+      imagePullPolicy: Always
+      command:
+        - sh
+      args:
+        - -c
+        - |
+          echo "Copying theme..."
+          cp -R /zcp/* /theme
+      volumeMounts:
+        - name: theme
+          mountPath: /theme
+
+  extraVolumeMounts: |
+    - name: theme
+      mountPath: /opt/jboss/keycloak/themes/zcp
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+
+  extraVolumes: |
+    - name: theme
+      emptyDir: {}
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+
+  extraArgs: -Dkeycloak.import=/realm/realm-zcp-export.json
+
+  persistence:
+    deployPostgres: false
+    dbVendor: POSTGRES
+    dbName: keycloak
+    dbHost: zcp-oidc-postgresql
+    dbPort: 5432
+    dbUser: keycloak
+    dbPassword: keycloak1234!
+
+  resources: 
+    limits:
+      cpu: "800m"
+      memory: "1024Mi"
+    requests:
+      cpu: "200m"
+      memory: "1024Mi"
+
+  ingress:
+    enabled: true
+    path: /
+
+    annotations: 
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      # ingress.kubernetes.io/affinity: cookie
+      ingress.bluemix.net/redirect-to-https: "True"
+
+    ## List of hosts for the ingress
+    hosts:
+      - keycloak2.cloudzcp.io
+
+    tls: 
+      - hosts:
+        - keycloak2.cloudzcp.io
+        secretName: cloudzcp-io-cert
+
