@@ -1,1 +1,1 @@
-kubectl create -f cloudzcp-io-cert.yaml
+kubectl create -f tls-secret.yaml

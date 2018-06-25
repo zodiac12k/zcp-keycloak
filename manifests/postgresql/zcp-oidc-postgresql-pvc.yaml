@@ -4,13 +4,11 @@ metadata:
   labels:
     app: zcp-oidc-postgresql
   name: zcp-oidc-postgresql
-  #namespace: target-namespace
-  namespace: zcp-oidc
+  #namespace: zcp-system
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
-  #storageClassName: target-storage-class-name
   storageClassName: ibmc-block-silver
