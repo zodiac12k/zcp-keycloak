@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: zcp-oidc-postgresql
+  name: zcp-oidc-postgresql
+  #namespace: target-namespace
+  namespace: zcp-oidc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  #storageClassName: target-storage-class-name
+  storageClassName: ibmc-block-silver

@@ -1,1 +1,3 @@
-kubectl create secret generic realm-secret -n zcp-oidc --from-file=realm-zcp-export.json
+. ../env.properties
+
+kubectl create secret generic realm-secret -n ${TARGET_NAMESPACE} --from-file=realm-zcp-export.json

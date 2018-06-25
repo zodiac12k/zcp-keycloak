@@ -52,20 +52,7 @@ keycloak:
 
   persistence:
     deployPostgres: false
-    dbVendor: POSTGRES
-    dbName: keycloak
     dbHost: zcp-oidc-postgresql
-    dbPort: 5432
-    dbUser: keycloak
-    dbPassword: keycloak1234!
-
-  resources: 
-    limits:
-      cpu: "800m"
-      memory: "1024Mi"
-    requests:
-      cpu: "200m"
-      memory: "1024Mi"
 
   ingress:
     enabled: true
@@ -76,13 +63,4 @@ keycloak:
       # kubernetes.io/tls-acme: "true"
       # ingress.kubernetes.io/affinity: cookie
       ingress.bluemix.net/redirect-to-https: "True"
-
-    ## List of hosts for the ingress
-    hosts:
-      - keycloak2.cloudzcp.io
-
-    tls: 
-      - hosts:
-        - keycloak2.cloudzcp.io
-        secretName: cloudzcp-io-cert
 

@@ -284,21 +284,12 @@
           "containerId": "97d35066-7bf2-46d0-a14c-2e37c1e8be16"
         }
       ],
-      "gitea": [],
-      "grafana": [
-        {
-          "id": "e5a1b424-5b20-4af2-9713-e6935ab35322",
-          "name": "uma_protection",
-          "scopeParamRequired": false,
-          "composite": false,
-          "clientRole": true,
-          "containerId": "a2ee5eab-6ad8-4e5a-b59f-9806a4aa5f24"
-        }
-      ],
+      "git": [],
       "catalog": [],
+      "devops": [],
       "security-admin-console": [],
-      "jenkins": [],
       "admin-cli": [],
+      "logging": [],
       "broker": [
         {
           "id": "333864df-ae9d-4412-8979-5505d15579f4",
@@ -310,7 +301,16 @@
           "containerId": "c4c0b6a5-a413-4eff-b93a-c9b1f1fbca45"
         }
       ],
-      "kibana": [],
+      "monitoring": [
+        {
+          "id": "e5a1b424-5b20-4af2-9713-e6935ab35322",
+          "name": "uma_protection",
+          "scopeParamRequired": false,
+          "composite": false,
+          "clientRole": true,
+          "containerId": "a2ee5eab-6ad8-4e5a-b59f-9806a4aa5f24"
+        }
+      ],
       "account": [
         {
           "id": "1e838202-9549-4fdb-b3ad-bb7d9a17354e",
@@ -351,8 +351,8 @@
   },
   "groups": [],
   "defaultRoles": [
-    "uma_authorization",
-    "offline_access"
+    "offline_access",
+    "uma_authorization"
   ],
   "requiredCredentials": [
     "password"
@@ -368,123 +368,6 @@
     "Google Authenticator"
   ],
   "clients": [
-    {
-      "id": "c4c0b6a5-a413-4eff-b93a-c9b1f1fbca45",
-      "clientId": "broker",
-      "name": "${client_broker}",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
-      "redirectUris": [],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": false,
-      "publicClient": false,
-      "frontchannelLogout": false,
-      "protocol": "openid-connect",
-      "attributes": {},
-      "fullScopeAllowed": false,
-      "nodeReRegistrationTimeout": 0,
-      "protocolMappers": [
-        {
-          "id": "418b2932-7847-450d-90bf-d1516fd5da52",
-          "name": "full name",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-full-name-mapper",
-          "consentRequired": true,
-          "consentText": "${fullName}",
-          "config": {
-            "id.token.claim": "true",
-            "access.token.claim": "true"
-          }
-        },
-        {
-          "id": "d3c1ee7f-4838-4e9d-b6bc-f3cbc88a3b62",
-          "name": "email",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": true,
-          "consentText": "${email}",
-          "config": {
-            "userinfo.token.claim": "true",
-            "user.attribute": "email",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "email",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "d0d52abe-9795-4847-bcb1-82b949d416d7",
-          "name": "given name",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": true,
-          "consentText": "${givenName}",
-          "config": {
-            "userinfo.token.claim": "true",
-            "user.attribute": "firstName",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "given_name",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "96b6f52d-f3c3-43d7-85df-d06c1ce72634",
-          "name": "family name",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": true,
-          "consentText": "${familyName}",
-          "config": {
-            "userinfo.token.claim": "true",
-            "user.attribute": "lastName",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "family_name",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "f7bc6483-61b2-45d2-8df4-7d020433ca36",
-          "name": "username",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-property-mapper",
-          "consentRequired": true,
-          "consentText": "${username}",
-          "config": {
-            "userinfo.token.claim": "true",
-            "user.attribute": "username",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "preferred_username",
-            "jsonType.label": "String"
-          }
-        },
-        {
-          "id": "b30654f5-35cd-446c-b4d0-84035a49e753",
-          "name": "role list",
-          "protocol": "saml",
-          "protocolMapper": "saml-role-list-mapper",
-          "consentRequired": false,
-          "config": {
-            "single": "false",
-            "attribute.nameformat": "Basic",
-            "attribute.name": "Role"
-          }
-        }
-      ],
-      "useTemplateConfig": false,
-      "useTemplateScope": false,
-      "useTemplateMappers": false
-    },
     {
       "id": "8a62940b-505f-4fd5-beaa-ca534988d74b",
       "clientId": "admin-cli",
@@ -578,7 +461,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -603,20 +487,136 @@
       "useTemplateMappers": false
     },
     {
-      "id": "a2ee5eab-6ad8-4e5a-b59f-9806a4aa5f24",
-      "clientId": "grafana",
-      "rootUrl": "http://grafana.cloudzcp.io/",
-      "adminUrl": "http://grafana.cloudzcp.io/",
+      "id": "c4c0b6a5-a413-4eff-b93a-c9b1f1fbca45",
+      "clientId": "broker",
+      "name": "${client_broker}",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "c3c7aef4-3636-4058-a0ef-828390abca7f",
+      "redirectUris": [],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "protocolMappers": [
+        {
+          "id": "418b2932-7847-450d-90bf-d1516fd5da52",
+          "name": "full name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-full-name-mapper",
+          "consentRequired": true,
+          "consentText": "${fullName}",
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "d3c1ee7f-4838-4e9d-b6bc-f3cbc88a3b62",
+          "name": "email",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": true,
+          "consentText": "${email}",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "email",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "email",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "d0d52abe-9795-4847-bcb1-82b949d416d7",
+          "name": "given name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": true,
+          "consentText": "${givenName}",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "firstName",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "given_name",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "96b6f52d-f3c3-43d7-85df-d06c1ce72634",
+          "name": "family name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": true,
+          "consentText": "${familyName}",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "lastName",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "family_name",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "f7bc6483-61b2-45d2-8df4-7d020433ca36",
+          "name": "username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": true,
+          "consentText": "${username}",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "username",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "b30654f5-35cd-446c-b4d0-84035a49e753",
+          "name": "role list",
+          "protocol": "saml",
+          "protocolMapper": "saml-role-list-mapper",
+          "consentRequired": false,
+          "config": {
+            "single": "false",
+            "attribute.nameformat": "Basic",
+            "attribute.name": "Role"
+          }
+        }
+      ],
+      "useTemplateConfig": false,
+      "useTemplateScope": false,
+      "useTemplateMappers": false
+    },
+    {
+      "id": "a2ee5eab-6ad8-4e5a-b59f-9806a4aa5f24",
+      "clientId": "monitoring",
+      "rootUrl": "",
+      "adminUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "4138cbf9-4091-4029-a1d6-d64450994f55",
       "redirectUris": [
-        "http://grafana.cloudzcp.io/*"
+        "https://grafana.cloudzcp.com/*"
       ],
-      "webOrigins": [
-        "http://grafana.cloudzcp.io"
-      ],
+      "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -630,8 +630,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.multivalued.roles": "false",
         "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -652,6 +652,7 @@
           "consentText": "",
           "config": {
             "user.session.note": "clientId",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientId",
@@ -743,6 +744,7 @@
           "consentText": "",
           "config": {
             "user.session.note": "clientHost",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientHost",
@@ -758,6 +760,7 @@
           "consentText": "",
           "config": {
             "user.session.note": "clientAddress",
+            "userinfo.token.claim": "true",
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientAddress",
@@ -773,7 +776,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         }
       ],
@@ -823,7 +827,7 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "673a850a-306b-4326-b645-ef295fe03fe1",
       "redirectUris": [],
       "webOrigins": [],
       "notBefore": 0,
@@ -925,7 +929,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         }
       ],
@@ -935,14 +940,13 @@
     },
     {
       "id": "21e1c7e6-9a6a-4081-91f8-50f9d7926d78",
-      "clientId": "kibana",
+      "clientId": "logging",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "69ca391e-4999-4779-96cc-6aef4875ea46",
       "redirectUris": [
-        "https://kibana.cloudzcp.io/*",
-        "http://kibana.cloudzcp.io/*"
+        "https://logging.cloudzcp.com/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -979,7 +983,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1065,18 +1070,18 @@
     },
     {
       "id": "e691c44d-4a3f-43a4-b5e4-262816651495",
-      "clientId": "gitea",
-      "rootUrl": "https://git.cloudzcp.io",
-      "adminUrl": "https://git.cloudzcp.io",
+      "clientId": "git",
+      "rootUrl": "",
+      "adminUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "0459b1f5-2543-4c53-be04-f62601428480",
       "redirectUris": [
-        "https://git.cloudzcp.io/*"
+        "https://git.cloudzcp.com/*"
       ],
       "webOrigins": [
-        "https://git.cloudzcp.io"
+        ""
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -1090,8 +1095,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.multivalued.roles": "false",
         "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1160,7 +1165,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1204,18 +1210,21 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "71ad1e42-d239-4a7d-99f9-e1e50ad7ca93",
       "defaultRoles": [
         "view-profile",
         "manage-account"
       ],
       "redirectUris": [
-        "http://grafana.cloudzcp.io/login/generic_oauth",
-        "https://console.cloudzcp.io/k8s-login",
+        "https://devops.cloudzcp.com/securityRealm/finishLogin",
+        "https://console.cloudzcp.com/k8s-login",
+        "https://catalog.cloudzcp.com/login/generic_oauth",
+        "https://console-zdb.cloudzcp.com/k8s-login",
+        "https://monitoring.cloudzcp.com/login/generic_oauth",
         "http://localhost:8181/k8s-login",
-        "http://console.zdb-dev.jp-tok.containers.mybluemix.net/k8s-login",
-        "https://grafana.cloudzcp.io/login/generic_oauth",
-        "http://jenkins.cloudzcp.io/securityRealm/finishLogin",
+        "https://git.cloudzcp.io/login/generic_oauth",
+        "https://logging.cloudzcp.com/login/generic_oauth",
+        "https://registry.cloudzcp.com/login/generic_oauth",
         "/auth/realms/zcp/account/*"
       ],
       "webOrigins": [],
@@ -1231,8 +1240,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.multivalued.roles": "false",
         "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1329,7 +1338,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         }
       ],
@@ -1344,10 +1354,9 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "8d7c396d-123e-4c59-8397-f6fe31e34680",
       "redirectUris": [
-        "http://catalog.cloudzcp.io/*",
-        "https://catalog.cloudzcp.io/*"
+        "https://catalog.cloudzcp.com/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -1362,8 +1371,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.multivalued.roles": "false",
         "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1444,7 +1453,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1470,19 +1480,17 @@
     },
     {
       "id": "a2e7025d-5ba8-4944-8711-da3b7ead5cf1",
-      "clientId": "jenkins",
-      "rootUrl": "https://jenkins.cloudzcp.io",
-      "adminUrl": "https://jenkins.cloudzcp.io",
+      "clientId": "devops",
+      "rootUrl": "",
+      "adminUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "*********",
       "redirectUris": [
-        "https://jenkins.cloudzcp.io/*"
+        "https://devops.cloudzcp.com/*"
       ],
-      "webOrigins": [
-        "https://jenkins.cloudzcp.io"
-      ],
+      "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1493,7 +1501,18 @@
       "publicClient": true,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
+        "saml.encrypt": "false",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "saml.authnstatement": "false",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "saml.onetimeuse.condition": "false"
+      },
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
       "protocolMappers": [
@@ -1566,7 +1585,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1642,7 +1662,8 @@
           "consentText": "${fullName}",
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -1733,16 +1754,17 @@
     "xRobotsTag": "none",
     "xFrameOptions": "SAMEORIGIN",
     "xXSSProtection": "1; mode=block",
-    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';"
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {
-    "password": "**********",
+    "password": "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",
     "starttls": "true",
     "auth": "true",
     "port": "465",
     "host": "smtp.sendgrid.net",
-    "from": "kilsookang@sk.com",
-    "fromDisplayName": "Cloud Z CP - IAM Administrator",
+    "from": "Administrator@cloudzcp.io",
+    "fromDisplayName": "Cloud Z CP - Administrator",
     "ssl": "true",
     "user": "apikey"
   },
@@ -1792,28 +1814,6 @@
         "config": {}
       },
       {
-        "id": "4e754a1f-2c09-487f-bf68-f3862fafa340",
-        "name": "Allowed Protocol Mapper Types",
-        "providerId": "allowed-protocol-mappers",
-        "subType": "authenticated",
-        "subComponents": {},
-        "config": {
-          "allowed-protocol-mapper-types": [
-            "oidc-full-name-mapper",
-            "oidc-usermodel-property-mapper",
-            "saml-user-property-mapper",
-            "oidc-address-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "saml-user-attribute-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "saml-role-list-mapper"
-          ],
-          "consent-required-for-all-mappers": [
-            "true"
-          ]
-        }
-      },
-      {
         "id": "8a8d8013-3f90-40dd-ac63-e993374325f8",
         "name": "Trusted Hosts",
         "providerId": "trusted-hosts",
@@ -1829,6 +1829,28 @@
         }
       },
       {
+        "id": "4e754a1f-2c09-487f-bf68-f3862fafa340",
+        "name": "Allowed Protocol Mapper Types",
+        "providerId": "allowed-protocol-mappers",
+        "subType": "authenticated",
+        "subComponents": {},
+        "config": {
+          "allowed-protocol-mapper-types": [
+            "oidc-usermodel-property-mapper",
+            "oidc-full-name-mapper",
+            "saml-user-property-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "saml-user-attribute-mapper",
+            "saml-role-list-mapper",
+            "oidc-address-mapper"
+          ],
+          "consent-required-for-all-mappers": [
+            "true"
+          ]
+        }
+      },
+      {
         "id": "ab68c08f-23d3-48a4-a973-32764c74da36",
         "name": "Allowed Protocol Mapper Types",
         "providerId": "allowed-protocol-mappers",
@@ -1837,13 +1859,13 @@
         "config": {
           "allowed-protocol-mapper-types": [
             "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
+            "saml-role-list-mapper",
             "oidc-usermodel-attribute-mapper",
+            "oidc-usermodel-property-mapper",
             "oidc-address-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "saml-role-list-mapper",
-            "saml-user-property-mapper",
-            "saml-user-attribute-mapper",
-            "oidc-usermodel-property-mapper"
+            "saml-user-property-mapper"
           ],
           "consent-required-for-all-mappers": [
             "true"
@@ -1876,9 +1898,9 @@
         }
       },
       {
-        "id": "273f53af-90b7-4bf4-9d59-0039ff187296",
-        "name": "aes-generated",
-        "providerId": "aes-generated",
+        "id": "5637bb96-c148-440d-8b7d-de5bc990b3c3",
+        "name": "rsa-generated",
+        "providerId": "rsa-generated",
         "subComponents": {},
         "config": {
           "priority": [
@@ -1887,9 +1909,9 @@
         }
       },
       {
-        "id": "5637bb96-c148-440d-8b7d-de5bc990b3c3",
-        "name": "rsa-generated",
-        "providerId": "rsa-generated",
+        "id": "273f53af-90b7-4bf4-9d59-0039ff187296",
+        "name": "aes-generated",
+        "providerId": "aes-generated",
         "subComponents": {},
         "config": {
           "priority": [
@@ -1900,13 +1922,11 @@
     ]
   },
   "internationalizationEnabled": true,
-  "supportedLocales": [
-    "ko"
-  ],
-  "defaultLocale": "ko",
+  "supportedLocales": [],
+  "defaultLocale": "en",
   "authenticationFlows": [
     {
-      "id": "d4016751-48e0-475c-b8f9-02af85a38bfd",
+      "id": "dd33375a-c8b1-40a2-8096-29e95e2dcede",
       "alias": "Handle Existing Account",
       "description": "Handle what to do if there is existing account with same email/username like authenticated identity provider",
       "providerId": "basic-flow",
@@ -1937,7 +1957,7 @@
       ]
     },
     {
-      "id": "536da0b2-b2b5-4eaa-8ac6-f36bf5d65f6b",
+      "id": "41c3b6b7-998b-46b1-bf56-c1be7b421382",
       "alias": "Verify Existing Account by Re-authentication",
       "description": "Reauthentication of existing account",
       "providerId": "basic-flow",
@@ -1961,7 +1981,7 @@
       ]
     },
     {
-      "id": "44e35178-9a45-4f3f-98de-adcf88a42ae3",
+      "id": "d6b66a2d-3dba-477f-b9d4-e1311e7d9dc7",
       "alias": "browser",
       "description": "browser based authentication",
       "providerId": "basic-flow",
@@ -1999,7 +2019,7 @@
       ]
     },
     {
-      "id": "cc2e8e3b-9de8-4607-9565-c47580793cea",
+      "id": "5c855cdb-f681-4ce0-b0a6-aed6489d930b",
       "alias": "clients",
       "description": "Base authentication for clients",
       "providerId": "client-flow",
@@ -2023,7 +2043,7 @@
       ]
     },
     {
-      "id": "3f24cc53-601e-4765-bda0-4db87af460f5",
+      "id": "9f424641-bd0c-46b1-8ec5-4cec97e3dcf8",
       "alias": "direct grant",
       "description": "OpenID Connect Resource Owner Grant",
       "providerId": "basic-flow",
@@ -2054,7 +2074,7 @@
       ]
     },
     {
-      "id": "b2186788-78c8-46b9-a344-c40c1067be69",
+      "id": "7cbb2eab-c861-43bd-9743-32614323b828",
       "alias": "docker auth",
       "description": "Used by Docker clients to authenticate against the IDP",
       "providerId": "basic-flow",
@@ -2071,7 +2091,7 @@
       ]
     },
     {
-      "id": "844110ae-0506-4da6-b7d5-1f1420b50312",
+      "id": "4304dffc-1355-4853-90d0-2b4f62306f2c",
       "alias": "first broker login",
       "description": "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
       "providerId": "basic-flow",
@@ -2104,7 +2124,7 @@
       ]
     },
     {
-      "id": "fa9c72ca-d6ad-412c-bd1c-6b78e44dfbd2",
+      "id": "f46dbac6-680d-4eaa-aa3b-0a2fba177cab",
       "alias": "forms",
       "description": "Username, password, otp and other auth forms.",
       "providerId": "basic-flow",
@@ -2128,7 +2148,7 @@
       ]
     },
     {
-      "id": "8f8e22e1-eb16-4ec9-9eb2-d7d5df73bd05",
+      "id": "7d8c9ed9-4e84-4b16-8685-6471edbbb508",
       "alias": "registration",
       "description": "registration flow",
       "providerId": "basic-flow",
@@ -2146,7 +2166,7 @@
       ]
     },
     {
-      "id": "9e333e82-6bfd-4a5c-8f34-918879107e14",
+      "id": "53d31107-b220-466a-955e-a34807973ccc",
       "alias": "registration form",
       "description": "registration form",
       "providerId": "form-flow",
@@ -2184,7 +2204,7 @@
       ]
     },
     {
-      "id": "3127731f-0964-41de-9bd5-4a2593806880",
+      "id": "99d1e563-4903-432a-8e7f-194a2c2aeaaf",
       "alias": "reset credentials",
       "description": "Reset credentials for a user if they forgot their password or something",
       "providerId": "basic-flow",
@@ -2222,7 +2242,7 @@
       ]
     },
     {
-      "id": "59ea2080-8238-43e5-abd3-8a9822cc4161",
+      "id": "5bbf90c3-3e1c-4f46-8d0f-5e6946a951a4",
       "alias": "saml ecp",
       "description": "SAML ECP Profile Authentication Flow",
       "providerId": "basic-flow",
@@ -2241,14 +2261,14 @@
   ],
   "authenticatorConfig": [
     {
-      "id": "abb3f675-5186-44c4-a35b-c910ed514973",
+      "id": "f51ccb95-488b-4352-bb33-8a5e55f214e0",
       "alias": "create unique user config",
       "config": {
         "require.password.update.after.registration": "false"
       }
     },
     {
-      "id": "9069f790-4c4c-494b-997a-086c64e23afa",
+      "id": "61909011-88b8-4b68-abde-58051fee14c0",
       "alias": "review profile config",
       "config": {
         "update.profile.on.first.login": "missing"
@@ -2305,14 +2325,15 @@
   "dockerAuthenticationFlow": "docker auth",
   "attributes": {
     "_browser_header.xXSSProtection": "1; mode=block",
+    "_browser_header.strictTransportSecurity": "max-age=31536000; includeSubDomains",
     "_browser_header.xFrameOptions": "SAMEORIGIN",
-    "permanentLockout": "false",
     "quickLoginCheckMilliSeconds": "1000",
+    "permanentLockout": "false",
     "displayName": "Cloud Z CP - Demo",
     "_browser_header.xRobotsTag": "none",
     "maxFailureWaitSeconds": "900",
-    "minimumQuickLoginWaitSeconds": "60",
     "displayNameHtml": "Cloud Z CP - Demo",
+    "minimumQuickLoginWaitSeconds": "60",
     "failureFactor": "30",
     "actionTokenGeneratedByUserLifespan": "300",
     "maxDeltaTimeSeconds": "43200",
