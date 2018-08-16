@@ -318,5 +318,7 @@ $ kubectl get pod -n zcp-system
 
 ## 설치 완료 후 KeyCloak 설정
 KeyCloak 이 설치 완료 된 이후에 브라우져로 접속, 위에서 설정한 관리자 계정으로 로그인 한다.
+
 Master Realm 의 master-realm client 의 Access Type 을 confidential 로 수정한다.
+
 관련 내용은 MyShare 의 해당 페이지를 참고 한다.
