@@ -41,7 +41,7 @@ KEYCLOAK_DB_PWD=keycloak!23$
 KEYCLOAK_DB_PVC_NAME=zcp-oidc-postgresql
 ```
 
-## PostgreSQL 생성
+## PostgreSQL Installation
 ### postgresql 디렉토리로 이동
 ```
 $ cd manifests/postgresql
@@ -85,8 +85,10 @@ $ kubectl get pvc -n zcp-system
 ```
 
 ### postgresql 생성
-values.yaml 을 프로젝트에 맞게 수정
+values.yaml 을 프로젝트에 맞게 수정한다.
+
 Image Registry 경로를 확인 한다.
+
 Private Only로 클러스터 생성하는 경우 반드시 IBM Container Registry 를 사용해야 함.
 
 ```
@@ -118,10 +120,7 @@ metrics:
 
 Helm install 수행
 ```
-$ ./helm_install.sh
-```
-
-```
+$ cat helm_install.sh
 . ../env.properties
 
 helm install stable/postgresql --version 0.12.0 \
@@ -139,7 +138,175 @@ helm install stable/postgresql --version 0.12.0 \
 #--set persistence.size=20Gi \
 ```
 
+```
+$ ./helm_install.sh
+```
+
 아래 명령어로 postgresql 이 정상적으로 실행되었는지 확인
+```
+$ kubectl get pod -n zcp-system
+```
+
+## KeyCloak Installation
+### tls secret 생성
+```
+$ cd menifests/keycloak
+```
+
+Ingress 에 적용할 TLS Secret 을 생성 한다.
+
+TLS Secret 이 이미 생성되어 있는 경우 생략 할 수 있다.
+
+tls-secret.yaml 의 내용을 실제 인증서의 값으로 수정 한다.
+
+metadata.namespace 의 값이 env.properties 의 TARGET_NAMESPACE 와 동일해야 한다.
+
+metadata.name 이 env.properties 의 DOMAIN_SECRET_NAME 과 동일해야 한다.
+
+```
+$ vi menifests/keycloak/tls-secret.yaml
+```
+
+```
+apiVersion: v1
+data:
+  tls.crt: xxxx
+  tls.key: xxxx
+kind: Secret
+metadata:
+  name: cloudzcp-com-cert
+  namespace: zcp-system
+type: kubernetes.io/tls
+```
+
+```
+$ ./kube_secret_create_cert.sh
+```
+
+다음 명령어로 Secret 이 생성된 것을 확인한다.
+
+```
+$ kubectl get secret -n zcp-system
+```
+
+### keycloak 생성 시 import 할 zcp realm secret 생성
+realm-zcp-export.json 이 import 할 KeyCloak 의 ZCP Realm Template 이다.
+
+KeyCloak 을 배포하면 서버를 기동하면서 ZCP Realm 을 import 한다.
+
+KeyCloak 이 정상 설치 되면 ZCP Realm 이 import 되어 있는 것을 확인 할 수 있다.
+
+KeyCloak 에 관리자로 로그인 한 이후에 각 ZCP Realm 내에 각 client 의 Valid Redirect URIs 를 수정해 주어야만 한다.
+
+```
+$ ./kube_secret_create_realm.sh
+```
+### KeyCloak 생성
+values.yaml 을 프로젝트에 맞게 수정한다.
+Ingress 설정의 경우 클러스트의 Private ALB를 사용하는 경우 Private ALB ID 설정을 반드시 해야 한다.
+
+```
+keycloak:
+  tolerations:
+    - effect: NoSchedule
+      key: management
+      operator: Equal
+      value: "true"
+  image:
+    repository: registry.au-syd.bluemix.net/cloudzcp/keycloak
+
+  affinity: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: beta.kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+          - key: role
+            operator: In
+            values:
+            - management
+
+  extraInitContainers: |
+    - name: theme-provider
+      image: registry.au-syd.bluemix.net/cloudzcp/zcp-keycloak-theme-provider:0.9.3
+      imagePullPolicy: Always
+      command:
+        - sh
+      args:
+        - -c
+        - |
+          echo "Copying theme..."
+          cp -R /zcp/* /theme
+      volumeMounts:
+        - name: theme
+          mountPath: /theme
+
+  extraVolumeMounts: |
+    - name: theme
+      mountPath: /opt/jboss/keycloak/themes/zcp
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+
+  extraVolumes: |
+    - name: theme
+      emptyDir: {}
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+
+  extraArgs: -Dkeycloak.import=/realm/realm-zcp-export.json
+
+  persistence:
+    deployPostgres: false
+    dbHost: zcp-oidc-postgresql
+
+  ingress:
+    enabled: true
+    path: /
+
+    annotations:
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      # ingress.kubernetes.io/affinity: cookie
+      ingress.bluemix.net/redirect-to-https: "True"
+      # 프로젝트의 클러스터에 Private ALB 를 사용해야 할 경우 아래 주석을 해제하고 아래 값을 반드시 private ALB ID 값으로 수정 한다.
+      # ingress.bluemix.net/ALB-ID: "private-cr7a9b181c82674f478e461c648c3000da-alb1"
+```
+
+Helm install 수행
+```
+$ cat helm_install.sh
+. ../env.properties
+
+helm install stable/keycloak --version 2.0.0 \
+--name zcp-oidc-keycloak \
+-f values.yaml \
+--namespace ${TARGET_NAMESPACE} \
+--set keycloak.username=${KEYCLOAK_ADMIN_ID} \
+--set keycloak.password=${KEYCLOAK_ADMIN_PWD} \
+--set keycloak.ingress.hosts[0]=${KEYCLOAK_INGRESS_HOSTS} \
+--set keycloak.ingress.tls[0].hosts[0]=${KEYCLOAK_INGRESS_HOSTS} \
+--set keycloak.ingress.tls[0].secretName=${DOMAIN_SECRET_NAME} \
+--set keycloak.persistence.dbVendor=${KEYCLOAK_DB_VENDOR} \
+--set keycloak.persistence.dbName=${KEYCLOAK_DB_NAME} \
+--set keycloak.persistence.dbPort=${KEYCLOAK_DB_PORT} \
+--set keycloak.persistence.dbUser=${KEYCLOAK_DB_USER} \
+--set keycloak.persistence.dbPassword=${KEYCLOAK_DB_PWD} \
+--set keycloak.resources.limits.cpu=${KEYCLOAK_LIMIT_CPU} \
+--set keycloak.resources.limits.memory=${KEYCLOAK_LIMIT_MEM} \
+--set keycloak.resources.requests.cpu=${KEYCLOAK_REQUEST_CPU} \
+--set keycloak.resources.requests.memory=${KEYCLOAK_REQUEST_MEM}
+```
+
+```
+$ ./helm_install.sh
+```
+
+아래 명령어를 KeyCloak 이 정상적으로 설치 되었는지 확인 한다.
 ```
 $ kubectl get pod -n zcp-system
 ```
