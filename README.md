@@ -323,4 +323,4 @@ Master Realm 의 master-realm client 의 Access Type 을 confidential 로 수정
 
 master-realm 의 secret 값과 env.properties 에 설정한 관리자 계정 정보를 zcp-iam 에서 사용한다.
 
-관련 내용은 MyShare 의 해당 페이지를 참고 한다.
+관련 내용은 [MyShare](https://myshare.skcc.com) 의 해당 페이지를 참고 한다.
