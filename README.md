@@ -53,7 +53,7 @@ $ cd manifests/postgresql
 ```
 
 ### zcp-oidc-postgresql-pvc.yaml 파일 확인 및 수정
-실제 프로젝트에 적용할 pvc 는 retain silver 로 해야 함.
+실제 프로젝트에 적용할 pvc 는 ibmc-block-retain-silver storageClass를 사용 해야 함.
 ```
 $ vi zcp-oidc-postgresql-pvc.yaml
 ```
