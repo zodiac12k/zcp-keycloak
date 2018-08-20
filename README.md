@@ -9,7 +9,7 @@ $ git clone https://github.com/cnpst/zcp-keycloak.git
 evn.properties 파일을 편집기로 열어 아래 항목을 프로젝트에 맞게 수정한다.
 
 ```
-$ vi manifests/evn.properties 
+$ vi manifests/env.properties 
 ```
 
 ```
