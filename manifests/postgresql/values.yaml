@@ -1,3 +1,6 @@
+image: "registry.au-syd.bluemix.net/cloudzcp/postgres"
+imageTag: "9.6.2"
+
 tolerations:
   - effect: NoSchedule
     key: management
@@ -16,3 +19,7 @@ affinity:
           operator: In
           values:
           - management
+
+metrics:
+  image: registry.au-syd.bluemix.net/cloudzcp/postgres_exporter
+

@@ -630,8 +630,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.force.post.binding": "false",
         "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1095,8 +1095,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.force.post.binding": "false",
         "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1218,9 +1218,9 @@
       "redirectUris": [
         "https://devops.cloudzcp.com/securityRealm/finishLogin",
         "https://console.cloudzcp.com/k8s-login",
-        "https://catalog.cloudzcp.com/login/generic_oauth",
         "https://console-zdb.cloudzcp.com/k8s-login",
         "https://monitoring.cloudzcp.com/login/generic_oauth",
+        "https://catalog.cloudzcp.com/login/generic_oauth",
         "http://localhost:8181/k8s-login",
         "https://git.cloudzcp.io/login/generic_oauth",
         "https://logging.cloudzcp.com/login/generic_oauth",
@@ -1240,8 +1240,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.force.post.binding": "false",
         "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1371,8 +1371,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.force.post.binding": "false",
         "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1486,7 +1486,7 @@
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "*********",
+      "secret": "ebcbe083-565e-48a2-94b0-2ec4c45c0eff",
       "redirectUris": [
         "https://devops.cloudzcp.com/*"
       ],
@@ -1498,13 +1498,13 @@
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": false,
-      "publicClient": true,
+      "publicClient": false,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
         "saml.assertion.signature": "false",
-        "saml.force.post.binding": "false",
         "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
         "saml.encrypt": "false",
         "saml_force_name_id_format": "false",
         "saml.client.signature": "false",
@@ -1758,13 +1758,13 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {
-    "password": "",
+    "password": "**********",
     "starttls": "true",
     "auth": "true",
     "port": "465",
     "host": "smtp.sendgrid.net",
-    "from": "Administrator@cloudzcp.io",
-    "fromDisplayName": "Cloud Z CP - Administrator",
+    "from": "kilsookang@sk.com",
+    "fromDisplayName": "Cloud Z CP - IAM Administrator",
     "ssl": "true",
     "user": "apikey"
   },

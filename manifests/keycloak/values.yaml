@@ -4,6 +4,8 @@ keycloak:
       key: management
       operator: Equal
       value: "true"
+  image:
+    repository: registry.au-syd.bluemix.net/cloudzcp/keycloak
 
   affinity: |
     nodeAffinity:
@@ -21,7 +23,7 @@ keycloak:
 
   extraInitContainers: |
     - name: theme-provider
-      image: cloudzcp/zcp-keycloak-theme-provider:latest
+      image: registry.au-syd.bluemix.net/cloudzcp/zcp-keycloak-theme-provider:0.9.3
       imagePullPolicy: Always
       command:
         - sh
@@ -63,4 +65,5 @@ keycloak:
       # kubernetes.io/tls-acme: "true"
       # ingress.kubernetes.io/affinity: cookie
       ingress.bluemix.net/redirect-to-https: "True"
+#      ingress.bluemix.net/ALB-ID: "private-cr7a9b181c82674f478e461c648c3000da-alb1"
 
