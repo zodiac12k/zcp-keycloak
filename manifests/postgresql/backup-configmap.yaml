@@ -1,4 +1,8 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zcp-oidc-postgresql-backup
+#  namespace: zcp-system
 data:
   dump-database.sh: |
     DATE=`TZ='Asia/Seoul' date +%Y%m%d`
@@ -29,7 +33,3 @@ data:
     date
 
     rm -f /backup/zcp-oidc-postgresql-"$DATE".dump
-kind: ConfigMap
-metadata:
-  name: zcp-oidc-postgresql-backup
-  namespace: zcp-system

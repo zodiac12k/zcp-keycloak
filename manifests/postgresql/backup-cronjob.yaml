@@ -5,7 +5,7 @@ metadata:
     app: oidc-backup
     component: backup
   name: zcp-oidc-postgresql-backup
-  namespace: zcp-system
+#  namespace: zcp-system
 spec:
   concurrencyPolicy: Allow
   failedJobsHistoryLimit: 1
