@@ -1,0 +1,35 @@
+apiVersion: v1
+data:
+  dump-database.sh: |
+    DATE=`TZ='Asia/Seoul' date +%Y%m%d`
+
+    POD=$(kubectl get pod -l release=zcp-oidc-postgresql -o jsonpath="{.items[0].metadata.name}")
+
+    kubectl exec $POD -it \
+    -- pg_dumpall \
+    > /backup/zcp-oidc-postgresql-"$DATE".dump
+    
+    date
+
+    du -sk /backup/zcp-oidc-postgresql-"$DATE".dump
+  upload-to-s3.sh: |
+    DATE=`TZ='Asia/Seoul' date +%Y%m%d`
+
+    export AWS_ACCESS_KEY_ID="xxxx"
+    export AWS_SECRET_ACCESS_KEY="xxxx"
+    export S3_ENDPOINT="https://s3.seo-ap-geo.objectstorage.service.networklayer.com"
+    export S3_BUCKET="zcp-backup"
+
+    ls -al /backup/
+
+    aws --endpoint-url="$S3_ENDPOINT" s3 cp \
+    /backup/zcp-oidc-postgresql-"$DATE".dump \
+    s3://"$S3_BUCKET"
+
+    date
+
+    rm -f /backup/zcp-oidc-postgresql-"$DATE".dump
+kind: ConfigMap
+metadata:
+  name: zcp-oidc-postgresql-backup
+  namespace: zcp-system
