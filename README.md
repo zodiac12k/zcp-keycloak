@@ -179,7 +179,7 @@ data:
   tls.key: xxxx
 kind: Secret
 metadata:
-  name: cloudzcp-com-cert
+  name: cloudzcp-io-cert
   namespace: zcp-system
 type: kubernetes.io/tls
 ```
