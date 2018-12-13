@@ -59,7 +59,7 @@ keycloak:
 
   persistence:
     deployPostgres: false
-    dbHost: zcp-oidc-postgresql-test
+    dbHost: zcp-oidc-postgresql
 
   ingress:
     enabled: true
