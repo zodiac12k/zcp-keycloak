@@ -23,7 +23,7 @@ keycloak:
 
   extraInitContainers: |
     - name: theme-provider
-      image: registry.au-syd.bluemix.net/cloudzcp/zcp-keycloak-theme-provider:0.9.3
+      image: registry.au-syd.bluemix.net/cloudzcp/zcp-keycloak-theme-provider:1.0.0
       imagePullPolicy: Always
       command:
         - sh
@@ -42,6 +42,8 @@ keycloak:
     - name: realm-secret
       mountPath: "/realm/"
       readOnly: true
+    - mountPath: /etc/localtime
+      name: timezone
 
   extraVolumes: |
     - name: theme
@@ -49,12 +51,15 @@ keycloak:
     - name: realm-secret
       secret:
         secretName: realm-secret
+    - hostPath:
+        path: /usr/share/zoneinfo/Asia/Seoul
+      name: timezone
 
   extraArgs: -Dkeycloak.import=/realm/realm-zcp-export.json
 
   persistence:
     deployPostgres: false
-    dbHost: zcp-oidc-postgresql
+    dbHost: zcp-oidc-postgresql-test
 
   ingress:
     enabled: true
