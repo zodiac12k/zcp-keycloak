@@ -201,7 +201,7 @@ KeyCloak 을 배포하면 서버를 기동하면서 ZCP Realm 을 import 한다.
 
 KeyCloak 이 정상 설치 되면 ZCP Realm 이 import 되어 있는 것을 확인 할 수 있다.
 
-KeyCloak 에 관리자로 로그인 한 이후에 각 ZCP Realm 내에 각 client 의 Valid Redirect URIs 를 수정해 주어야만 한다.
+KeyCloak 에 관리자로 로그인 한 이후에 ZCP Realm 내에 Display Name, HTML Display Name 을 설치한 Cluster Name 으로 수정하고 각 client 의 Valid Redirect URIs 를 수정해 주어야만 한다.
 
 ```
 $ ./kube_secret_create_realm.sh
